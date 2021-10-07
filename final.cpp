@@ -127,34 +127,37 @@ void TeaMenu(){
 	printf("=================================================\n") ;
 }
 
+//公共--性别检测 
+Status SexCheck(char sex[]){
+	if(strcmp(sex,"male") == 0 || strcmp(sex,"female") == 0)	return OK ;
+	return ERROR ;
+}
+
 //学生--判断空链表
 Status StuIsEmpty(StuList S){
 	return S->next == NULL ;
 } 
 
 //学生--学号查重
-Status StuID_Same(StuList S){
-	
+Status StuID_Same(StuList S,char id[]){
+	Student *p = S->next ;
+	while(p){
+		if(strcmp(p->id,id) == 0)	return ERROR ;
+		p = p->next ;
+	}
+	return OK ;
 } 
 
 //学生--学号位数检测 
 Status StuIDcheck(StuList S){
-	
+	if(strlen(S->id) == 12)	return OK ;
+	return ERROR ;
 } 
 
-//学生--姓名检测
-Status StuNameCheck(StuList S){
-	
-}
-
-//学生--性别检测 
-Status StuSexCheck(StuList S){
-	
-}
-
 //学生--成绩检测 
-Status StuGradeCheck(StuList S){
-	
+Status StuGradeCheck(ElemType grade){
+	if(grade >= 0 && grade <= 100)	return OK ;
+	return ERROR ;
 }
 
 //学生--创建空链表
@@ -172,17 +175,39 @@ StuList StuInsert(StuList S){
 	
 	printf("请输入您想要添加的学生相关信息：\n") ;
 	printf("学号：(请输入12位有效数字)") ;
-	scanf("%s",p->id) ;
+	while(true){
+		scanf("%s",p->id) ;
+		if(StuID_Same(r,p->id))	break ;
+		else{
+			printf("该学号已存在！请重新输入！\n") ;	
+		}
+	}
 	printf("姓名：(限用汉字)") ;
 	scanf("%s",p->name) ;
 	printf("性别：( 男-male || 女-female )") ;
-	scanf("%s",p->sex) ;
+	while(true){
+		scanf("%s",p->sex) ;
+		if(SexCheck(p->sex))	break ;
+		else	printf("请按规定输入！\n") ;
+	}
 	printf("数学成绩：(0-100)") ;
-	scanf("%d",&p->grades.math) ;
+	while(true){
+		scanf("%d",&p->grades.math) ;
+		if(StuGradeCheck(p->grades.math))	break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
 	printf("语文成绩：(0-100)") ;
-	scanf("%d",&p->grades.chinese) ;
+	while(true){
+		scanf("%d",&p->grades.chinese) ;
+		if(StuGradeCheck(p->grades.chinese))	break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
 	printf("英语成绩：(0-100)") ;
-	scanf("%d",&p->grades.english) ;
+	while(true){
+		scanf("%d",&p->grades.english) ;
+		if(StuGradeCheck(p->grades.english))	break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
 	
 	//寻找尾结点
 	while(r->next){
@@ -265,17 +290,39 @@ StuList StuModify(StuList S){
 			if(select){
 				printf("请输入您想要添加的学生相关信息：\n") ;
 				printf("学号：(请输入12位有效数字)") ;
-				scanf("%s",q->id) ;
+				while(true){
+					scanf("%s",q->id) ;
+					if(StuID_Same(S,q->id))	break ;
+					else{
+						printf("该学号已存在！请重新输入！\n") ;	
+					}
+				}
 				printf("姓名：(限用汉字)") ;
 				scanf("%s",q->name) ;
 				printf("性别：( 男-male || 女-female )") ;
-				scanf("%s",q->sex) ;
+				while(true){
+					scanf("%s",q->sex) ;
+					if(SexCheck(q->sex))	break ;
+					else	printf("请按规定输入！\n") ;
+				}
 				printf("数学成绩：(0-100)") ;
-				scanf("%d",&q->grades.math) ;
+				while(true){
+					scanf("%d",&q->grades.math) ;
+					if(StuGradeCheck(q->grades.math))	break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
 				printf("语文成绩：(0-100)") ;
-				scanf("%d",&q->grades.chinese) ;
+				while(true){
+					scanf("%d",&q->grades.chinese) ;
+					if(StuGradeCheck(q->grades.chinese))	break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
 				printf("英语成绩：(0-100)") ;
-				scanf("%d",&q->grades.english) ;
+				while(true){
+					scanf("%d",&q->grades.english) ;
+					if(StuGradeCheck(q->grades.english))	break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
 				
 				q->next = p->next ;
 				pos->next = q ;
@@ -348,19 +395,20 @@ StuList StuClear(StuList S){
 
 //学生--销毁功能
 Status StuDestroy(StuList S){
-	StuList r ;
+	Student *r = S ;
 	int select ;
 	printf("--是否继续操作(注意：此操作不可逆！)--\n") ;
 	printf("********** 1-确认|0-取消 **********\n") ; 
 	scanf("%d",&select);
 	if(select){
 		while(S){
-			r = S ;
 			S = S->next ;
 			free(r) ;
+			r = S ;
 		}
 		printf("成功销毁！\n") ;
 	}
+	StuList students = StuInitList() ;
 	return OK ;
 }
 
@@ -370,28 +418,25 @@ Status TeaIsEmpty(TeaList T){
 } 
 
 //老师--教工号查重
-Status TeaID_Same(TeaList T){
-	
+Status TeaID_Same(TeaList T,char id[]){
+	Teacher *p = T->next ;
+	while(p){
+		if(strcmp(p->id,id) == 0)	return ERROR ;
+		p = p->next ;
+	}
+	return OK ;
 } 
 
 //老师--教工号位数检测 
 Status TeaIDcheck(TeaList T){
-	
+	if(strlen(T->id) == 6)	return OK ;
+	return ERROR ;
 } 
 
-//老师--姓名检测
-Status TeaNameCheck(TeaList T){
-	
-}
-
-//老师--性别检测 
-Status TeaSexCheck(TeaList T){
-	
-}
-
 //老师--评选检测 
-StatusTeaPollCheck(TeaList T){
-	
+Status TeaPollCheck(ElemType_T poll){
+	if(poll >= 'A' && poll <= 'D')	return OK ;
+	return ERROR ;
 }
 
 //老师--创建空链表
@@ -409,17 +454,42 @@ TeaList TeaInsert(TeaList T){
 	
 	printf("请输入您想要添加的老师相关信息：\n") ;
 	printf("教工号：(请输入6位有效数字)") ;
-	scanf("%s",p->id) ;
+	while(true){
+		scanf("%s",p->id) ;
+		if(TeaID_Same(r,p->id))	break ;
+		else{
+			printf("该学号已存在！请重新输入！\n") ;	
+		}
+	}
 	printf("姓名：(限用汉字)") ;
 	scanf("%s",p->name) ;
 	printf("性别：( 男-male || 女-female )") ;
-	scanf("%s",p->sex) ;
+	while(true){
+		scanf("%s",p->sex) ;
+		if(SexCheck(p->sex))	break ;
+		else	printf("请按规定输入！\n") ;
+	}
+	getchar() ;
 	printf("评选一：(A-D)") ;
-	scanf("%d",&p->results.poll_1) ;
+	while(true){
+		scanf("%c",&p->results.poll_1) ;
+		if(TeaPollCheck(p->results.poll_1))		break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
+	getchar() ;
 	printf("评选二：(A-D)") ;
-	scanf("%d",&p->results.poll_2) ;
+	while(true){
+		scanf("%c",&p->results.poll_2) ;
+		if(TeaPollCheck(p->results.poll_2))		break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
+	getchar() ;
 	printf("评选三：(A-D)") ;
-	scanf("%d",&p->results.poll_3) ;
+	while(true){
+		scanf("%c",&p->results.poll_3) ;
+		if(TeaPollCheck(p->results.poll_3))		break ;
+		else	printf("格式有误！请重新输入！\n") ;
+	}
 	
 	//寻找尾结点
 	while(r->next){
@@ -447,13 +517,13 @@ void TeaQuery(TeaList T){
 	while(p){
 		if(strcmp(p->id,tea_id) == 0){
 			printf("查找成功！\n") ;
-			printf("教工号\t\t姓名\t性别\t评一\t评二\t评三\n") ;
+			printf("教工号\t姓名\t性别\t评一\t评二\t评三\n") ;
 			printf("%s\t",p->id) ;
 			printf("%s\t",p->name) ;
 			printf("%s\t",p->sex) ;
-			printf("%d\t",p->results.poll_1) ;
-			printf("%d\t",p->results.poll_2) ;
-			printf("%d\n",p->results.poll_3) ;
+			printf("%c\t",p->results.poll_1) ;
+			printf("%c\t",p->results.poll_2) ;
+			printf("%c\n",p->results.poll_3) ;
 			return ;
 		}
 		p = p->next ;
@@ -469,14 +539,14 @@ void TeaShow(TeaList T){
 		return ;
 	}
 	Teacher *p = T->next ;
-	printf("教工号\t\t姓名\t性别\t评一\t评二\t评三\n") ;
+	printf("教工号\t姓名\t性别\t评一\t评二\t评三\n") ;
 	while(p){
 		printf("%s\t",p->id) ;
 		printf("%s\t",p->name) ;
 		printf("%s\t",p->sex) ;
-		printf("%d\t",p->results.poll_1) ;
-		printf("%d\t",p->results.poll_2) ;
-		printf("%d\n",p->results.poll_3) ;
+		printf("%c\t",p->results.poll_1) ;
+		printf("%c\t",p->results.poll_2) ;
+		printf("%c\n",p->results.poll_3) ;
 		
 		p = p->next ;
 	}
@@ -502,17 +572,42 @@ TeaList TeaModify(TeaList T){
 			if(select){
 				printf("请输入您想要添加的老师相关信息：\n") ;
 				printf("教工号：(请输入6位有效数字)") ;
-				scanf("%s",q->id) ;
+				while(true){
+					scanf("%s",q->id) ;
+					if(TeaID_Same(T,q->id))	break ;
+					else{
+						printf("该学号已存在！请重新输入！\n") ;	
+					}
+				}
 				printf("姓名：(限用汉字)") ;
 				scanf("%s",q->name) ;
 				printf("性别：( 男-male || 女-female )") ;
-				scanf("%s",q->sex) ;
+				while(true){
+					scanf("%s",q->sex) ;
+					if(SexCheck(q->sex))	break ;
+					else	printf("请按规定输入！\n") ;
+				}
+				getchar() ;
 				printf("评选一：(A-D)") ;
-				scanf("%d",&q->results.poll_1) ;
+				while(true){
+					scanf("%c",&q->results.poll_1) ;
+					if(TeaPollCheck(q->results.poll_1))		break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
+				getchar() ;
 				printf("评选二：(A-D)") ;
-				scanf("%d",&q->results.poll_2) ;
+				while(true){
+					scanf("%c",&q->results.poll_2) ;
+					if(TeaPollCheck(q->results.poll_2))		break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
+				getchar() ;
 				printf("评选三：(A-D)") ;
-				scanf("%d",&q->results.poll_3) ;
+				while(true){
+					scanf("%c",&q->results.poll_3) ;
+					if(TeaPollCheck(q->results.poll_3))		break ;
+					else	printf("格式有误！请重新输入！\n") ;
+				}
 				
 				q->next = p->next ;
 				pos->next = q ;
@@ -585,28 +680,28 @@ TeaList TeaClear(TeaList T){
 
 //老师--销毁功能
 Status TeaDestroy(TeaList T){
-	TeaList r ;
+	Teacher *r = T ;
 	int select ;
 	printf("--是否继续操作(注意：此操作不可逆！)--\n") ;
 	printf("********** 1-确认|0-取消 **********\n") ; 
 	scanf("%d",&select);
 	if(select){
 		while(T){
-			r = T ;
 			T = T->next ;
 			free(r) ;
+			r = T ;
 		}
 		printf("成功销毁！\n") ;
 	}
+	TeaList teachers = TeaInitList() ;
 	return OK ;
 }
 
 int main(){
 	Register() ;//登陆操作 
-	
+	StuList students = StuInitList() ;
+	TeaList teachers = TeaInitList() ;
 	while(true){
-		StuList students = StuInitList() ;
-		TeaList teachers = TeaInitList() ;
 		ShowMenu() ;//显示主界面 
 		int select ;
 		printf("我的选择：") ;
