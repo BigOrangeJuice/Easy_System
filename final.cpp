@@ -4,177 +4,213 @@
 #include <conio.h>
 
 typedef int ElemType ;
+typedef char ElemType_T ; 
 typedef int Status ;
 #define OK 1
 #define ERROR 0
 
-//µÇÂ½²Ù×÷
-//ÕË»§£º374551651
-//ÃÜÂë£º123456789qq 
+//ç™»é™†æ“ä½œ
+//è´¦æˆ·ï¼š374551651
+//å¯†ç ï¼š123456789qq 
 void Register(){
 	char account[10] ;
 	char password[20] ;
 	while(true){
-		printf("ÇëÊäÈëÕËºÅ£º") ;
+		printf("è¯·è¾“å…¥è´¦å·ï¼š") ;
 		scanf("%s",account) ;
 		if(strcmp(account,"374551651") == 0)	break ;
 		else{
-			printf("¸ÃÕË»§²»´æÔÚ£¡ÇëÖØĞÂÊäÈë£¡\n") ;
+			printf("è¯¥è´¦æˆ·ä¸å­˜åœ¨ï¼è¯·é‡æ–°è¾“å…¥ï¼\n") ;
 			system("pause") ;
 			system("cls") ;
 		}
 	} 
 	while(true){
 		char temp ;
-		printf("ÇëÊäÈëÃÜÂë£º") ;
+		printf("è¯·è¾“å…¥å¯†ç ï¼š") ;
 		for(int i = 0;(temp = getch()) != '\r';++ i){
 			printf("*") ;
 			password[i] = temp ;
 		}
+		printf("%s",password) ;
+		system("pause") ;
 		if(strncmp(password,"123456789qq",12) == 0)	break ;
 		else{
 			password[11] = '\0' ;
-			printf("\nÃÜÂë´íÎó£¡ÇëÖØĞÂÊäÈë£¡\n") ;
+			printf("\nå¯†ç é”™è¯¯ï¼è¯·é‡æ–°è¾“å…¥ï¼\n") ;
 			system("pause") ;
 			system("cls") ;
-			printf("ÇëÊäÈëÕËºÅ£º374551651\n") ;
+			printf("è¯·è¾“å…¥è´¦å·ï¼š374551651\n") ;
 		}
 	}
 } 
 
-//Ñ§Éú³É¼¨½á¹¹Ìå 
+//å­¦ç”Ÿæˆç»©ç»“æ„ä½“ 
 typedef struct score{
 	ElemType math ;
 	ElemType chinese ;
 	ElemType english ;
 }score;
 
-//Ñ§Éú½á¹¹Ìå 
+//å­¦ç”Ÿç»“æ„ä½“ 
 typedef struct Student{
-	char id[20] ;	//12Î»ÓĞĞ§Êı×Ö 
-	char name[20] ;	//¹æ¶¨Îªºº×Ö 
-	char sex[10] ;	//male»òÕßfemale 
+	char id[20] ;	//12ä½æœ‰æ•ˆæ•°å­— 
+	char name[20] ;	//è§„å®šä¸ºæ±‰å­— 
+	char sex[10] ;	//maleæˆ–è€…female 
 	score grades ;
 	struct Student *next ; 
 }Student,*StuList;
 
-//½ÌÊ¦ÆÀÑ¡µÃ·Ö½á¹¹Ìå
+//æ•™å¸ˆè¯„é€‰å¾—åˆ†ç»“æ„ä½“
 typedef struct vote{
-	ElemType poll_1 ;
-	ElemType poll_2 ;
-	ElemType poll_3 ;
+	ElemType_T poll_1 ;
+	ElemType_T poll_2 ;
+	ElemType_T poll_3 ;
 }vote; 
 
-//ÀÏÊ¦½á¹¹Ìå
+//è€å¸ˆç»“æ„ä½“
 typedef struct Teacher{
-	char id[20] ;	//6Î»ÓĞĞ§Êı×Ö 
-	char name[20] ;	//¹æ¶¨Îªºº×Ö 
-	char sex[10] ;	//male»òÕßfemale 
+	char id[20] ;	//6ä½æœ‰æ•ˆæ•°å­— 
+	char name[20] ;	//è§„å®šä¸ºæ±‰å­— 
+	char sex[10] ;	//maleæˆ–è€…female 
 	vote results ;
-	struct Student *next ; 
+	struct Teacher *next ; 
 }Teacher,*TeaList; 
 
-//Ö÷½çÃæ
+//ä¸»ç•Œé¢
 void ShowMenu(){
 	system("cls") ;
+	printf("æ–°é“¾è¡¨åˆ›å»ºæˆåŠŸï¼\n") ;
 	printf("=======================================\n") ;
 	printf("*****\twelcome to the system\t*****\n") ;
 	printf("=======================================\n") ;
 	printf("=======================================\n") ;
-	printf("*****\t°´¼ü1 - ½øÈëÑ§ÉúÏµÍ³\t*****\n") ;
-	printf("*****\t°´¼ü2 - ½øÈëÀÏÊ¦ÏµÍ³\t*****\n") ;
-	printf("*****\t°´¼ü0 - ÍË³öÏµÍ³\t*****\n") ;
+	printf("*****\tæŒ‰é”®1 - è¿›å…¥å­¦ç”Ÿç³»ç»Ÿ\t*****\n") ;
+	printf("*****\tæŒ‰é”®2 - è¿›å…¥è€å¸ˆç³»ç»Ÿ\t*****\n") ;
+	printf("*****\tæŒ‰é”®0 - é€€å‡ºç³»ç»Ÿ\t*****\n") ;
 	printf("=======================================\n") ;
 } 
 
-//Ñ§Éú¹ÜÀí½çÃæ
+//å­¦ç”Ÿç®¡ç†ç•Œé¢
 void StuMenu(){
 	system("cls") ;
 	printf("=================================================\n") ;
 	printf("*****\twelcome to the system of student\t*****\n") ;
 	printf("=================================================\n") ;
 	printf("=================================================\n") ;
-	printf("*****\t°´¼ü1 - Ìí¼ÓÑ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü2 - ²éÕÒÑ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü3 - ÏÔÊ¾Ñ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü4 - ĞŞ¸ÄÑ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü5 - É¾³ıÑ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü6 - Çå¿ÕÑ§ÉúĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü7 - Ïú»ÙÑ§ÉúÏµÍ³\t*****\n") ;
-	printf("*****\t°´¼ü0 - ·µ»ØÉÏÒ»¼¶\t*****\n") ;
+	printf("*****\tæŒ‰é”®1 - æ·»åŠ å­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®2 - æŸ¥æ‰¾å­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®3 - æ˜¾ç¤ºå­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®4 - ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®5 - åˆ é™¤å­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®6 - æ¸…ç©ºå­¦ç”Ÿä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®7 - é”€æ¯å­¦ç”Ÿç³»ç»Ÿ\t*****\n") ;
+	printf("*****\tæŒ‰é”®0 - è¿”å›ä¸Šä¸€çº§\t*****\n") ;
 	printf("=================================================\n") ;
 } 
 
-//ÀÏÊ¦¹ÜÀí½çÃæ 
+//è€å¸ˆç®¡ç†ç•Œé¢ 
 void TeaMenu(){
 	system("cls") ;
 	printf("=================================================\n") ;
 	printf("*****\twelcome to the system of teacher\t*****\n") ;
 	printf("=================================================\n") ;
 	printf("=================================================\n") ;
-	printf("*****\t°´¼ü1 - Ìí¼ÓÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü2 - ²éÕÒÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü3 - ÏÔÊ¾ÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü4 - ĞŞ¸ÄÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü5 - É¾³ıÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü6 - Çå¿ÕÀÏÊ¦ĞÅÏ¢\t*****\n") ;
-	printf("*****\t°´¼ü7 - Ïú»ÙÀÏÊ¦ÏµÍ³\t*****\n") ;
-	printf("*****\t°´¼ü0 - ·µ»ØÉÏÒ»¼¶\t*****\n") ;
+	printf("*****\tæŒ‰é”®1 - æ·»åŠ è€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®2 - æŸ¥æ‰¾è€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®3 - æ˜¾ç¤ºè€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®4 - ä¿®æ”¹è€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®5 - åˆ é™¤è€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®6 - æ¸…ç©ºè€å¸ˆä¿¡æ¯\t*****\n") ;
+	printf("*****\tæŒ‰é”®7 - é”€æ¯è€å¸ˆç³»ç»Ÿ\t*****\n") ;
+	printf("*****\tæŒ‰é”®0 - è¿”å›ä¸Šä¸€çº§\t*****\n") ;
 	printf("=================================================\n") ;
 }
 
-//Ñ§Éú--ÅĞ¶Ï¿ÕÁ´±í
+//å­¦ç”Ÿ--åˆ¤æ–­ç©ºé“¾è¡¨
 Status StuIsEmpty(StuList S){
 	return S->next == NULL ;
 } 
 
-//Ñ§Éú--Î²²å·¨Ìí¼Ó¹¦ÄÜ
+//å­¦ç”Ÿ--å­¦å·æŸ¥é‡
+Status StuID_Same(StuList S){
+	
+} 
+
+//å­¦ç”Ÿ--å­¦å·ä½æ•°æ£€æµ‹ 
+Status StuIDcheck(StuList S){
+	
+} 
+
+//å­¦ç”Ÿ--å§“åæ£€æµ‹
+Status StuNameCheck(StuList S){
+	
+}
+
+//å­¦ç”Ÿ--æ€§åˆ«æ£€æµ‹ 
+Status StuSexCheck(StuList S){
+	
+}
+
+//å­¦ç”Ÿ--æˆç»©æ£€æµ‹ 
+Status StuGradeCheck(StuList S){
+	
+}
+
+//å­¦ç”Ÿ--åˆ›å»ºç©ºé“¾è¡¨
+StuList StuInitList(){
+	StuList S = (StuList)malloc(sizeof(Student)) ;
+	S->next = NULL ;
+	return S ;
+}
+
+//å­¦ç”Ÿ--å°¾æ’æ³•æ·»åŠ åŠŸèƒ½
 StuList StuInsert(StuList S){
 	Student *p = (Student*)malloc(sizeof(Student)) ;
 	p->next = NULL ;
 	StuList r = S ;
 	
-	printf("ÇëÊäÈëÄúÏëÒªÌí¼ÓµÄÑ§ÉúÏà¹ØĞÅÏ¢£º\n") ;
-	printf("Ñ§ºÅ£º(ÇëÊäÈë12Î»ÓĞĞ§Êı×Ö)") ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„å­¦ç”Ÿç›¸å…³ä¿¡æ¯ï¼š\n") ;
+	printf("å­¦å·ï¼š(è¯·è¾“å…¥12ä½æœ‰æ•ˆæ•°å­—)") ;
 	scanf("%s",p->id) ;
-	printf("ĞÕÃû£º(ÏŞÓÃºº×Ö)") ;
+	printf("å§“åï¼š(é™ç”¨æ±‰å­—)") ;
 	scanf("%s",p->name) ;
-	printf("ĞÔ±ğ£º( ÄĞ-male || Å®-female )") ;
+	printf("æ€§åˆ«ï¼š( ç”·-male || å¥³-female )") ;
 	scanf("%s",p->sex) ;
-	printf("ÊıÑ§³É¼¨£º(0-100)") ;
+	printf("æ•°å­¦æˆç»©ï¼š(0-100)") ;
 	scanf("%d",&p->grades.math) ;
-	printf("ÓïÎÄ³É¼¨£º(0-100)") ;
+	printf("è¯­æ–‡æˆç»©ï¼š(0-100)") ;
 	scanf("%d",&p->grades.chinese) ;
-	printf("Ó¢Óï³É¼¨£º(0-100)") ;
+	printf("è‹±è¯­æˆç»©ï¼š(0-100)") ;
 	scanf("%d",&p->grades.english) ;
 	
-	//Ñ°ÕÒÎ²½áµã
+	//å¯»æ‰¾å°¾ç»“ç‚¹
 	while(r->next){
 		r = r->next ;
 	} 
 	
-	//Æ´½Ó 
+	//æ‹¼æ¥ 
 	r->next = p ;
 	r = p ;
 	
-	printf("Ìí¼Ó³É¹¦£¡\n") ;
+	printf("æ·»åŠ æˆåŠŸï¼\n") ;
 	return S ; 
 }
 
-//Ñ§Éú--¸ù¾İÑ§ºÅ²éÕÒ¹¦ÄÜ
+//å­¦ç”Ÿ--æ ¹æ®å­¦å·æŸ¥æ‰¾åŠŸèƒ½
 void StuQuery(StuList S){
 	if(StuIsEmpty(S)){
-		printf("Á´±íÎª¿Õ£¡\n") ;
+		printf("é“¾è¡¨ä¸ºç©ºï¼\n") ;
 		return ;
 	}
 	Student *p = S->next ;
 	char stu_id[20] ;
-	printf("ÇëÊäÈëÄúÏëÒª²éÑ¯µÄÑ§ÉúÑ§ºÅ£º") ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æŸ¥è¯¢çš„å­¦ç”Ÿå­¦å·ï¼š") ;
 	scanf("%s",stu_id) ;
 	while(p){
 		if(strcmp(p->id,stu_id) == 0){
-			printf("²éÕÒ³É¹¦£¡\n") ;
-			printf("Ñ§ºÅ\t\tĞÕÃû\tĞÔ±ğ\tÊıÑ§\tÓïÎÄ\tÓ¢Óï\n") ;
+			printf("æŸ¥æ‰¾æˆåŠŸï¼\n") ;
+			printf("å­¦å·\t\tå§“å\tæ€§åˆ«\tæ•°å­¦\tè¯­æ–‡\tè‹±è¯­\n") ;
 			printf("%s\t",p->id) ;
 			printf("%s\t",p->name) ;
 			printf("%s\t",p->sex) ;
@@ -185,18 +221,18 @@ void StuQuery(StuList S){
 		}
 		p = p->next ;
 	}
-	printf("±§Ç¸£¡²éÎŞ´ËÈË£¡\n") ;
+	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
 	return ;
 }
 
-//Ñ§Éú--ÏÔÊ¾¹¦ÄÜ
+//å­¦ç”Ÿ--æ˜¾ç¤ºåŠŸèƒ½
 void StuShow(StuList S){
 	if(StuIsEmpty(S)){
-		printf("Á´±íÎª¿Õ£¡\n") ;
+		printf("é“¾è¡¨ä¸ºç©ºï¼\n") ;
 		return ;
 	}
 	Student *p = S->next ;
-	printf("Ñ§ºÅ\t\tĞÕÃû\tĞÔ±ğ\tÊıÑ§\tÓïÎÄ\tÓ¢Óï\n") ;
+	printf("å­¦å·\t\tå§“å\tæ€§åˆ«\tæ•°å­¦\tè¯­æ–‡\tè‹±è¯­\n") ;
 	while(p){
 		printf("%s\t",p->id) ;
 		printf("%s\t",p->name) ;
@@ -209,10 +245,10 @@ void StuShow(StuList S){
 	}
 }
 
-//Ñ§Éú--ĞŞ¸Ä¹¦ÄÜ
+//å­¦ç”Ÿ--ä¿®æ”¹åŠŸèƒ½
 StuList StuModify(StuList S){
 	char stu_id[20] ;
-	printf("ÇëÊäÈëÄúÏëÒªĞŞ¸ÄµÄÑ§ÉúÑ§ºÅ£º") ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦ä¿®æ”¹çš„å­¦ç”Ÿå­¦å·ï¼š") ;
 	scanf("%s",stu_id) ;
 	
 	Student *p = S->next ;
@@ -223,27 +259,27 @@ StuList StuModify(StuList S){
 	while(p){
 		if(strcmp(p->id,stu_id) == 0){
 			int select ;
-			printf("--ÊÇ·ñ¼ÌĞø²Ù×÷(×¢Òâ£º´Ë²Ù×÷²»¿ÉÄæ£¡)--\n") ;
-			printf("********** 1-È·ÈÏ|0-È¡Ïû **********\n") ; 
+			printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+			printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
 			scanf("%d",&select);
 			if(select){
-				printf("ÇëÊäÈëÄúÏëÒªÌí¼ÓµÄÑ§ÉúÏà¹ØĞÅÏ¢£º\n") ;
-				printf("Ñ§ºÅ£º(ÇëÊäÈë12Î»ÓĞĞ§Êı×Ö)") ;
+				printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„å­¦ç”Ÿç›¸å…³ä¿¡æ¯ï¼š\n") ;
+				printf("å­¦å·ï¼š(è¯·è¾“å…¥12ä½æœ‰æ•ˆæ•°å­—)") ;
 				scanf("%s",q->id) ;
-				printf("ĞÕÃû£º(ÏŞÓÃºº×Ö)") ;
+				printf("å§“åï¼š(é™ç”¨æ±‰å­—)") ;
 				scanf("%s",q->name) ;
-				printf("ĞÔ±ğ£º( ÄĞ-male || Å®-female )") ;
+				printf("æ€§åˆ«ï¼š( ç”·-male || å¥³-female )") ;
 				scanf("%s",q->sex) ;
-				printf("ÊıÑ§³É¼¨£º(0-100)") ;
+				printf("æ•°å­¦æˆç»©ï¼š(0-100)") ;
 				scanf("%d",&q->grades.math) ;
-				printf("ÓïÎÄ³É¼¨£º(0-100)") ;
+				printf("è¯­æ–‡æˆç»©ï¼š(0-100)") ;
 				scanf("%d",&q->grades.chinese) ;
-				printf("Ó¢Óï³É¼¨£º(0-100)") ;
+				printf("è‹±è¯­æˆç»©ï¼š(0-100)") ;
 				scanf("%d",&q->grades.english) ;
 				
 				q->next = p->next ;
 				pos->next = q ;
-				printf("ĞŞ¸Ä³É¹¦£¡\n") ; 
+				printf("ä¿®æ”¹æˆåŠŸï¼\n") ; 
 				return S ;
 			}
 			break ;
@@ -251,14 +287,14 @@ StuList StuModify(StuList S){
 		p = p->next ;
 		pos = pos->next ;
 	}
-	if(!p)	printf("±§Ç¸£¡²éÎŞ´ËÈË£¡\n") ;
+	if(!p)	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
 	return S ;
 }
 
-//Ñ§Éú--É¾³ı¹¦ÄÜ
+//å­¦ç”Ÿ--åˆ é™¤åŠŸèƒ½
 StuList StuDelete(StuList S){
 	char stu_id[20] ;
-	printf("ÇëÊäÈëÄúÏëÒªÉ¾³ıµÄÑ§ÉúÑ§ºÅ£º") ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦åˆ é™¤çš„å­¦ç”Ÿå­¦å·ï¼š") ;
 	scanf("%s",stu_id) ;
 	
 	Student *p = S->next ;
@@ -267,13 +303,13 @@ StuList StuDelete(StuList S){
 	while(p){
 		if(strcmp(p->id,stu_id) == 0){
 			int select ;
-			printf("--ÊÇ·ñ¼ÌĞø²Ù×÷(×¢Òâ£º´Ë²Ù×÷²»¿ÉÄæ£¡)--\n") ;
-			printf("********** 1-È·ÈÏ|0-È¡Ïû **********\n") ; 
+			printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+			printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
 			scanf("%d",&select);
 			if(select){
 				r->next = r->next->next ;
 				free(p) ;
-				printf("É¾³ı³É¹¦£¡\n") ;
+				printf("åˆ é™¤æˆåŠŸï¼\n") ;
 				return S ;
 			}
 			break ;
@@ -281,19 +317,19 @@ StuList StuDelete(StuList S){
 		p = p->next ;
 		r = r->next ;
 	}
-	if(!p)	printf("±§Ç¸£¡²éÎŞ´ËÈË£¡\n") ;
+	if(!p)	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
 	return S ;
 }
 
-//Ñ§Éú--Çå¿Õ¹¦ÄÜ
+//å­¦ç”Ÿ--æ¸…ç©ºåŠŸèƒ½
 StuList StuClear(StuList S){
 	if(StuIsEmpty(S)){
-		printf("Á´±í±¾Éí¾ÍÊÇ¿ÕÁ´±í£¡\n") ;
+		printf("é“¾è¡¨æœ¬èº«å°±æ˜¯ç©ºé“¾è¡¨ï¼\n") ;
 		return S;
 	}
 	int select ;
-	printf("--ÊÇ·ñ¼ÌĞø²Ù×÷(×¢Òâ£º´Ë²Ù×÷²»¿ÉÄæ£¡)--\n") ;
-	printf("********** 1-È·ÈÏ|0-È¡Ïû **********\n") ; 
+	printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+	printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
 	scanf("%d",&select);
 	if(select){
 		Student *p,*q ;
@@ -304,166 +340,377 @@ StuList StuClear(StuList S){
 			free(p) ;
 			p = q ;
 		}
-		printf("ÒÑÇå¿Õ£¡\n") ;
+		printf("å·²æ¸…ç©ºï¼\n") ;
 		S->next = NULL ;
 	}
 	return S ;
 }
 
-//Ñ§Éú--Ïú»Ù¹¦ÄÜ
-StuList StuDestroy(StuList S){
-	
+//å­¦ç”Ÿ--é”€æ¯åŠŸèƒ½
+Status StuDestroy(StuList S){
+	StuList r ;
+	int select ;
+	printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+	printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
+	scanf("%d",&select);
+	if(select){
+		while(S){
+			r = S ;
+			S = S->next ;
+			free(r) ;
+		}
+		printf("æˆåŠŸé”€æ¯ï¼\n") ;
+	}
+	return OK ;
 }
 
-//ÀÏÊ¦--ÅĞ¶Ï¿ÕÁ´±í
+//è€å¸ˆ--åˆ¤æ–­ç©ºé“¾è¡¨
 Status TeaIsEmpty(TeaList T){
 	return T->next == NULL ;
 } 
 
-//ÀÏÊ¦--Î²²å·¨Ìí¼Ó¹¦ÄÜ
+//è€å¸ˆ--æ•™å·¥å·æŸ¥é‡
+Status TeaID_Same(TeaList T){
+	
+} 
+
+//è€å¸ˆ--æ•™å·¥å·ä½æ•°æ£€æµ‹ 
+Status TeaIDcheck(TeaList T){
+	
+} 
+
+//è€å¸ˆ--å§“åæ£€æµ‹
+Status TeaNameCheck(TeaList T){
+	
+}
+
+//è€å¸ˆ--æ€§åˆ«æ£€æµ‹ 
+Status TeaSexCheck(TeaList T){
+	
+}
+
+//è€å¸ˆ--è¯„é€‰æ£€æµ‹ 
+StatusTeaPollCheck(TeaList T){
+	
+}
+
+//è€å¸ˆ--åˆ›å»ºç©ºé“¾è¡¨
+TeaList TeaInitList(){
+	TeaList T = (TeaList)malloc(sizeof(Teacher)) ;
+	T->next = NULL ;
+	return T ;
+} 
+
+//è€å¸ˆ--å°¾æ’æ³•æ·»åŠ åŠŸèƒ½
 TeaList TeaInsert(TeaList T){
+	Teacher *p = (Teacher*)malloc(sizeof(Teacher)) ;
+	p->next = NULL ;
+	TeaList r = T ;
 	
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„è€å¸ˆç›¸å…³ä¿¡æ¯ï¼š\n") ;
+	printf("æ•™å·¥å·ï¼š(è¯·è¾“å…¥6ä½æœ‰æ•ˆæ•°å­—)") ;
+	scanf("%s",p->id) ;
+	printf("å§“åï¼š(é™ç”¨æ±‰å­—)") ;
+	scanf("%s",p->name) ;
+	printf("æ€§åˆ«ï¼š( ç”·-male || å¥³-female )") ;
+	scanf("%s",p->sex) ;
+	printf("è¯„é€‰ä¸€ï¼š(A-D)") ;
+	scanf("%d",&p->results.poll_1) ;
+	printf("è¯„é€‰äºŒï¼š(A-D)") ;
+	scanf("%d",&p->results.poll_2) ;
+	printf("è¯„é€‰ä¸‰ï¼š(A-D)") ;
+	scanf("%d",&p->results.poll_3) ;
+	
+	//å¯»æ‰¾å°¾ç»“ç‚¹
+	while(r->next){
+		r = r->next ;
+	} 
+	
+	//æ‹¼æ¥ 
+	r->next = p ;
+	r = p ;
+	
+	printf("æ·»åŠ æˆåŠŸï¼\n") ;
+	return T ; 
 }
 
-//ÀÏÊ¦--¸ù¾İ½Ì¹¤ºÅ²éÕÒ¹¦ÄÜ
+//è€å¸ˆ--æ ¹æ®æ•™å·¥å·æŸ¥æ‰¾åŠŸèƒ½
 void TeaQuery(TeaList T){
-	
+	if(TeaIsEmpty(T)){
+		printf("é“¾è¡¨ä¸ºç©ºï¼\n") ;
+		return ;
+	}
+	Teacher *p = T->next ;
+	char tea_id[20] ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æŸ¥è¯¢çš„è€å¸ˆæ•™å·¥å·ï¼š") ;
+	scanf("%s",tea_id) ;
+	while(p){
+		if(strcmp(p->id,tea_id) == 0){
+			printf("æŸ¥æ‰¾æˆåŠŸï¼\n") ;
+			printf("æ•™å·¥å·\t\tå§“å\tæ€§åˆ«\tè¯„ä¸€\tè¯„äºŒ\tè¯„ä¸‰\n") ;
+			printf("%s\t",p->id) ;
+			printf("%s\t",p->name) ;
+			printf("%s\t",p->sex) ;
+			printf("%d\t",p->results.poll_1) ;
+			printf("%d\t",p->results.poll_2) ;
+			printf("%d\n",p->results.poll_3) ;
+			return ;
+		}
+		p = p->next ;
+	}
+	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
+	return ;
 }
 
-//ÀÏÊ¦--ÏÔÊ¾¹¦ÄÜ
+//è€å¸ˆ--æ˜¾ç¤ºåŠŸèƒ½
 void TeaShow(TeaList T){
-	
+	if(TeaIsEmpty(T)){
+		printf("é“¾è¡¨ä¸ºç©ºï¼\n") ;
+		return ;
+	}
+	Teacher *p = T->next ;
+	printf("æ•™å·¥å·\t\tå§“å\tæ€§åˆ«\tè¯„ä¸€\tè¯„äºŒ\tè¯„ä¸‰\n") ;
+	while(p){
+		printf("%s\t",p->id) ;
+		printf("%s\t",p->name) ;
+		printf("%s\t",p->sex) ;
+		printf("%d\t",p->results.poll_1) ;
+		printf("%d\t",p->results.poll_2) ;
+		printf("%d\n",p->results.poll_3) ;
+		
+		p = p->next ;
+	}
 }
 
-//ÀÏÊ¦--ĞŞ¸Ä¹¦ÄÜ
+//è€å¸ˆ--ä¿®æ”¹åŠŸèƒ½
 TeaList TeaModify(TeaList T){
+	char tea_id[20] ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦ä¿®æ”¹çš„è€å¸ˆæ•™å·¥å·ï¼š") ;
+	scanf("%s",tea_id) ;
 	
+	Teacher *p = T->next ;
+	Teacher *pos = T ;
+	Teacher *q = (Teacher*)malloc(sizeof(Teacher)) ;
+	q->next = NULL ;
+	
+	while(p){
+		if(strcmp(p->id,tea_id) == 0){
+			int select ;
+			printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+			printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
+			scanf("%d",&select);
+			if(select){
+				printf("è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„è€å¸ˆç›¸å…³ä¿¡æ¯ï¼š\n") ;
+				printf("æ•™å·¥å·ï¼š(è¯·è¾“å…¥6ä½æœ‰æ•ˆæ•°å­—)") ;
+				scanf("%s",q->id) ;
+				printf("å§“åï¼š(é™ç”¨æ±‰å­—)") ;
+				scanf("%s",q->name) ;
+				printf("æ€§åˆ«ï¼š( ç”·-male || å¥³-female )") ;
+				scanf("%s",q->sex) ;
+				printf("è¯„é€‰ä¸€ï¼š(A-D)") ;
+				scanf("%d",&q->results.poll_1) ;
+				printf("è¯„é€‰äºŒï¼š(A-D)") ;
+				scanf("%d",&q->results.poll_2) ;
+				printf("è¯„é€‰ä¸‰ï¼š(A-D)") ;
+				scanf("%d",&q->results.poll_3) ;
+				
+				q->next = p->next ;
+				pos->next = q ;
+				printf("ä¿®æ”¹æˆåŠŸï¼\n") ; 
+				return T ;
+			}
+			break ;
+		}
+		p = p->next ;
+		pos = pos->next ;
+	}
+	if(!p)	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
+	return T ;
 }
 
-//ÀÏÊ¦--É¾³ı¹¦ÄÜ
+//è€å¸ˆ--åˆ é™¤åŠŸèƒ½
 TeaList TeaDelete(TeaList T){
+	char tea_id[20] ;
+	printf("è¯·è¾“å…¥æ‚¨æƒ³è¦åˆ é™¤çš„è€å¸ˆæ•™å·¥å·ï¼š") ;
+	scanf("%s",tea_id) ;
 	
+	Teacher *p = T->next ;
+	TeaList r = T ;
+	
+	while(p){
+		if(strcmp(p->id,tea_id) == 0){
+			int select ;
+			printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+			printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
+			scanf("%d",&select);
+			if(select){
+				r->next = r->next->next ;
+				free(p) ;
+				printf("åˆ é™¤æˆåŠŸï¼\n") ;
+				return T ;
+			}
+			break ;
+		}
+		p = p->next ;
+		r = r->next ;
+	}
+	if(!p)	printf("æŠ±æ­‰ï¼æŸ¥æ— æ­¤äººï¼\n") ;
+	return T ;
 }
 
-//ÀÏÊ¦--Çå¿Õ¹¦ÄÜ
+//è€å¸ˆ--æ¸…ç©ºåŠŸèƒ½
 TeaList TeaClear(TeaList T){
-	
+	if(TeaIsEmpty(T)){
+		printf("é“¾è¡¨æœ¬èº«å°±æ˜¯ç©ºé“¾è¡¨ï¼\n") ;
+		return T;
+	}
+	int select ;
+	printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+	printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
+	scanf("%d",&select);
+	if(select){
+		Teacher *p,*q ;
+		p = T->next ;
+		q = T->next ;
+		while(p){
+			q = q->next ;
+			free(p) ;
+			p = q ;
+		}
+		printf("å·²æ¸…ç©ºï¼\n") ;
+		T->next = NULL ;
+	}
+	return T ;
 }
 
-//ÀÏÊ¦--Ïú»Ù¹¦ÄÜ
-TeaList TeaDestroy(TeaList T){
-	
+//è€å¸ˆ--é”€æ¯åŠŸèƒ½
+Status TeaDestroy(TeaList T){
+	TeaList r ;
+	int select ;
+	printf("--æ˜¯å¦ç»§ç»­æ“ä½œ(æ³¨æ„ï¼šæ­¤æ“ä½œä¸å¯é€†ï¼)--\n") ;
+	printf("********** 1-ç¡®è®¤|0-å–æ¶ˆ **********\n") ; 
+	scanf("%d",&select);
+	if(select){
+		while(T){
+			r = T ;
+			T = T->next ;
+			free(r) ;
+		}
+		printf("æˆåŠŸé”€æ¯ï¼\n") ;
+	}
+	return OK ;
 }
 
 int main(){
-	Register() ;//µÇÂ½²Ù×÷ 
-	StuList students = (StuList)malloc(sizeof(Student)) ;
-	TeaList teachers = (TeaList)malloc(sizeof(Teacher)) ;
+	Register() ;//ç™»é™†æ“ä½œ 
+	
 	while(true){
-		ShowMenu() ;//ÏÔÊ¾Ö÷½çÃæ 
+		StuList students = StuInitList() ;
+		TeaList teachers = TeaInitList() ;
+		ShowMenu() ;//æ˜¾ç¤ºä¸»ç•Œé¢ 
 		int select ;
-		printf("ÎÒµÄÑ¡Ôñ£º") ;
+		printf("æˆ‘çš„é€‰æ‹©ï¼š") ;
 		scanf("%d",&select) ;
-		//½øÈëÑ§ÉúÑ¡Ôñ½çÃæ 
+		//è¿›å…¥å­¦ç”Ÿé€‰æ‹©ç•Œé¢ 
 		if(select == 1){	
 			StuMenu() ;
 			int stu_select ;
-			printf("ÎÒµÄÑ¡Ôñ£º") ;
+			printf("æˆ‘çš„é€‰æ‹©ï¼š") ;
 			scanf("%d",&stu_select) ;
 			switch(stu_select){
-				case 1://Ìí¼Ó 
+				case 1://æ·»åŠ  
 					StuInsert(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 2://²éÕÒ 
+				case 2://æŸ¥æ‰¾ 
 					StuQuery(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 3://ÏÔÊ¾ 
+				case 3://æ˜¾ç¤º 
 					StuShow(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 4://ĞŞ¸Ä 
+				case 4://ä¿®æ”¹ 
 					StuModify(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 5://É¾³ı 
+				case 5://åˆ é™¤ 
 					StuDelete(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 6://Çå¿Õ 
+				case 6://æ¸…ç©º 
 					StuClear(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 7://Ïú»Ù 
+				case 7://é”€æ¯ 
 					StuDestroy(students) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 0://·µ»ØÉÏÒ»¼¶ 
+				case 0://è¿”å›ä¸Šä¸€çº§ 
 					break ;
 			}
 		}
-		//½øÈëÀÏÊ¦Ñ¡Ôñ½çÃæ 
+		//è¿›å…¥è€å¸ˆé€‰æ‹©ç•Œé¢ 
 		else if(select == 2){
 			int tea_select ;
 			TeaMenu() ;
-			printf("ÎÒµÄÑ¡Ôñ£º") ;
+			printf("æˆ‘çš„é€‰æ‹©ï¼š") ;
 			scanf("%d",&tea_select) ;
 			switch(tea_select){
-				case 1://Ìí¼Ó 
+				case 1://æ·»åŠ  
 					TeaInsert(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 2://²éÕÒ 
+				case 2://æŸ¥æ‰¾ 
 					TeaQuery(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 3://ÏÔÊ¾ 
+				case 3://æ˜¾ç¤º 
 					TeaShow(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 4://ĞŞ¸Ä 
+				case 4://ä¿®æ”¹ 
 					TeaModify(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 5://É¾³ı 
+				case 5://åˆ é™¤ 
 					TeaDelete(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 6://Çå¿Õ 
+				case 6://æ¸…ç©º 
 					TeaClear(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 7://Ïú»Ù 
+				case 7://é”€æ¯ 
 					TeaDestroy(teachers) ;
 					system("pause") ;
 					system("cls") ;
 					break ;
-				case 0://·µ»ØÉÏÒ»¼¶ 
+				case 0://è¿”å›ä¸Šä¸€çº§ 
 					break ;
 			}
 		}
-		//ÍË³ö 
+		//é€€å‡º 
 		else if(select == 0){
-			printf("ÍË³ö³ÌĞò£¡\n") ;
+			printf("é€€å‡ºç¨‹åºï¼\n") ;
 			return 0 ; 
 		}
-		//ÒâÍâÊäÈë 
+		//æ„å¤–è¾“å…¥ 
 		else{
-			printf("ÊäÈëÓĞÎó£¡ÇëÖØĞÂÊäÈë£¡\n") ;
+			printf("è¾“å…¥æœ‰è¯¯ï¼è¯·é‡æ–°è¾“å…¥ï¼\n") ;
 			system("pause") ;
 		}	
 	} 
