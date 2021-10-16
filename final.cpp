@@ -1049,4 +1049,5 @@ int main() {
 	TeaList teachers = TeaInitList();
 	Enter(students, teachers);
 	return 0;
+	
 }
