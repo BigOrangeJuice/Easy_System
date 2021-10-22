@@ -34,8 +34,6 @@ void Register() {
 			printf("*");
 			password[i] = temp;
 		}
-		printf("%s", password);
-		system("pause");
 		if (strncmp(password, "123456789qq", 12) == 0)	break;
 		else {
 			password[11] = '\0';
@@ -108,7 +106,8 @@ void StuMenu() {
 	printf("*****\t按键6 - 清空学生信息\t*****\n");
 	printf("*****\t按键7 - 销毁学生系统\t*****\n");
 	printf("*****\t按键8 - 插入学生信息\t*****\n");
-	printf("*****\t按键9 - 使用快速排序\t*****\n");
+	printf("*****\t按键9 - 逆序输出学生信息\t*****\n");
+	printf("*****\t按键10 - 首变尾\t*****\n");
 	printf("*****\t按键0 - 返回上一级\t*****\n");
 	printf("=================================================\n");
 }
@@ -128,7 +127,8 @@ void TeaMenu() {
 	printf("*****\t按键6 - 清空老师信息\t*****\n");
 	printf("*****\t按键7 - 销毁老师系统\t*****\n");
 	printf("*****\t按键8 - 插入老师信息\t*****\n");
-	printf("*****\t按键9 - 使用快速排序\t*****\n");
+	printf("*****\t按键9 - 逆序输出老师信息\t*****\n");
+	printf("*****\t按键10 - 首变尾\t*****\n");
 	printf("*****\t按键0 - 返回上一级\t*****\n");
 	printf("=================================================\n");
 }
@@ -403,6 +403,37 @@ void StuShow(StuList S) {
 
 		p = p->next;
 	}
+}
+
+//学生--逆序显示
+void StuShow_reverse(StuList S) {
+	if (S) {
+		if (S->next) {
+			StuShow_reverse(S->next);
+		}
+		printf("%s\t", S->id);
+		printf("%s\t", S->name);
+		printf("%s\t", S->sex);
+		printf("%d\t", S->grades.math);
+		printf("%d\t", S->grades.chinese);
+		printf("%d\t", S->grades.english);
+		int average = (S->grades.math + S->grades.chinese + S->grades.english) / 3;
+		printf("%d\n", average);
+	}
+}
+
+//学生--首变尾
+StuList StuConvert(StuList S) {
+	if (S && S->next && S->next->next) {
+		Student* q = S->next;
+		Student* p = S->next->next;
+		S->next = S->next->next ;
+		while (p->next)	p = p->next;
+		p->next = q;
+		q->next = NULL;
+	}
+	printf("完成首置末!\n");
+	return S;
 }
 
 //学生--修改功能
@@ -767,6 +798,38 @@ void TeaShow(TeaList T) {
 	}
 }
 
+//老师--逆序显示
+void TeaShow_reverse(TeaList T) {
+	if (T) {
+		if (T->next) {
+			TeaShow_reverse(T->next);
+		}
+		printf("%s\t", T->id);
+		printf("%s\t", T->name);
+		printf("%s\t", T->sex);
+		printf("%c\t", T->results.poll_1);
+		printf("%c\t", T->results.poll_2);
+		printf("%c\t", T->results.poll_3);
+		char max = T->results.poll_1 > T->results.poll_2 ? T->results.poll_1 > T->results.poll_3 ? T->results.poll_1 : T->results.poll_3 : T->results.poll_2 > T->results.poll_3 ? T->results.poll_2 : T->results.poll_3;
+		printf("%c\n", max);
+	}
+	return ;
+}
+
+//老师--首变尾
+TeaList TeaConvert(TeaList T) {
+	if (T && T->next && T->next->next) {
+		Teacher* q = T->next;
+		Teacher* p = T->next->next;
+		T->next = T->next->next;
+		while (p->next)	p = p->next;
+		p->next = q;
+		q->next = NULL;
+	}
+	printf("完成首置末!\n");
+	return T;
+}
+
 //老师--修改功能
 TeaList TeaModify(TeaList T) {
 	char tea_id[20] = { 0 };
@@ -972,6 +1035,15 @@ Status Enter(StuList students, TeaList teachers) {
 				system("pause");
 				system("cls");
 				break;
+			case 9://逆序
+				printf("学号\t\t姓名\t性别\t数学\t语文\t英语\t平均成绩\n");
+				StuShow_reverse(students->next);
+				system("pause");
+				system("cls");
+			case 10://首变尾
+				StuConvert(students);
+				system("pause");
+				system("cls");
 			case 0://返回上一级 
 				break;
 			}
@@ -1026,6 +1098,15 @@ Status Enter(StuList students, TeaList teachers) {
 				TeaInsert_location(teachers);
 				system("pause");
 				system("cls");
+			case 9://逆序
+				printf("教工号\t姓名\t性别\t评一\t评二\t评三\t最大评分\n");
+				TeaShow_reverse(teachers->next);
+				system("pause");
+				system("cls");
+			case 10://首变尾
+				TeaConvert(teachers);
+				system("pause");
+				system("cls");
 			case 0://返回上一级 
 				break;
 			}
@@ -1049,5 +1130,4 @@ int main() {
 	TeaList teachers = TeaInitList();
 	Enter(students, teachers);
 	return 0;
-	
 }
